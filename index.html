@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>招財貓 - 商機管理系統</title>
+    <link rel="stylesheet" href="/src/style.css">
+    <script type="module" defer src="/src/main.js"></script>
+</head>
+<body class="bg-gray-100">
+    <div x-data="businessSystem" class="flex min-h-screen">
+        <!-- Sidebar -->
+        <aside class="w-48 bg-white shadow-lg">
+            <div class="p-4 text-2xl font-bold text-center border-b">招財貓</div>
+            <nav class="flex flex-col p-2 space-y-2">
+                <a href="#" class="p-2 rounded hover:bg-gray-100">首頁</a>
+                <a href="#" class="p-2 rounded hover:bg-gray-100">公司管理</a>
+                <a href="#" class="p-2 rounded hover:bg-gray-100">聯絡人管理</a>
+                <a href="#" class="p-2 rounded hover:bg-gray-100">拜訪紀錄</a>
+                <a href="#" class="p-2 rounded bg-green-500 text-white">商機列表</a>
+                <a href="#" class="p-2 rounded hover:bg-gray-100">上稿管理</a>
+                <a href="#" class="p-2 rounded hover:bg-gray-100">目標設定</a>
+                <a href="#" class="p-2 rounded hover:bg-gray-100">系統管理</a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-8">
+            <h1 class="text-2xl font-bold mb-6">商機列表</h1>
+            
+            <!-- Search Form -->
+            <div class="space-y-4 mb-6">
+                <div class="flex gap-2">
+                    <input type="text" placeholder="請輸入公司或商機名稱" class="flex-1 p-2 border rounded">
+                    <button class="px-4 py-2 bg-blue-500 text-white rounded">搜尋</button>
+                </div>
+                
+                <div class="flex flex-wrap gap-4">
+                    <select class="p-2 border rounded w-40">
+                        <option>階段</option>
+                    </select>
+                    <select class="p-2 border rounded w-40">
+                        <option>產品</option>
+                    </select>
+                    <select class="p-2 border rounded w-40">
+                        <option>成交率</option>
+                    </select>
+                    <select class="p-2 border rounded w-40">
+                        <option>部門</option>
+                    </select>
+                    <select class="p-2 border rounded w-40">
+                        <option>業務</option>
+                    </select>
+                </div>
+
+                <div class="flex items-center justify-between">
+                    <div>目前共有：24,795 筆</div>
+                    <div class="flex gap-2 items-center">
+                        更新日期：
+                        <select class="p-2 border rounded w-40">
+                            <option>請選擇</option>
+                        </select>
+                        <span>~</span>
+                        <select class="p-2 border rounded w-40">
+                            <option>請選擇</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table -->
+            <div class="bg-white rounded-lg shadow overflow-x-auto">
+                <table class="w-full">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="p-3 text-left">商機編號</th>
+                            <th class="p-3 text-left">階段</th>
+                            <th class="p-3 text-left">客戶</th>
+                            <th class="p-3 text-left">代理商</th>
+                            <th class="p-3 text-left">商機名稱</th>
+                            <th class="p-3 text-left">產品</th>
+                            <th class="p-3 text-left">成交率</th>
+                            <th class="p-3 text-right">預估金額</th>
+                            <th class="p-3 text-left">部門</th>
+                            <th class="p-3 text-left">負責業務</th>
+                            <th class="p-3 text-left">更新時間</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template x-for="item in opportunities" :key="item.id">
+                            <tr class="border-t">
+                                <td class="p-3" x-text="item.id"></td>
+                                <td class="p-3">
+                                    <span :class="{
+                                        'px-2 py-1 rounded text-white text-sm': true,
+                                        'bg-green-500': item.status === '開發',
+                                        'bg-purple-500': item.status === '提案',
+                                        'bg-orange-500': item.status === '回覆',
+                                        'bg-blue-500': item.status === '合約'
+                                    }" x-text="item.status"></span>
+                                </td>
+                                <td class="p-3" x-text="item.customer"></td>
+                                <td class="p-3" x-text="item.agent"></td>
+                                <td class="p-3" x-text="item.name"></td>
+                                <td class="p-3" x-text="item.product"></td>
+                                <td class="p-3" x-text="item.rate"></td>
+                                <td class="p-3 text-right" x-text="item.amount.toLocaleString()"></td>
+                                <td class="p-3" x-text="item.department"></td>
+                                <td class="p-3" x-text="item.manager"></td>
+                                <td class="p-3" x-text="item.updateTime"></td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
